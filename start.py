@@ -4,8 +4,6 @@ from gymnasium.envs.registration import register
 from utils.CLI import cli, Difficulty
 import pygame
 
-# Nao Mexer (Inicializacao do Software)
-
 args = cli()
 
 register(

@@ -1,8 +1,6 @@
 import math
 from utils.Point import Point
 
-# Nao mexer (Menor distancia e menor angulo entre pontos)
-
 class Geometry:
   
     @staticmethod

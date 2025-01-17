@@ -1,7 +1,5 @@
 from rsoccer_gym.Render import SSLRenderField
 
-# Nao Mexer (Dados SSL)
-
 class SSLHRenderField(SSLRenderField):
     length = 6
     width = 4

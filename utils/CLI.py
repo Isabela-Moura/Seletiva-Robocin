@@ -2,8 +2,6 @@ import argparse
 import textwrap
 from enum import Enum
 
-# Nao mexer (Inicializacao)
-
 class Difficulty(Enum):
     EASY = 1          
     MEDIUM = 2        

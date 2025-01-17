@@ -1,8 +1,6 @@
 import math
 from typing import NamedTuple
 
-# Nao mexer (Operacoes com os pontos)
-
 class Point(NamedTuple):
     x: float
     y: float

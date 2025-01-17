@@ -1,8 +1,6 @@
 from rsoccer_gym.Entities import Robot
 from utils.Point import Point
 
-# Nao Mexer (Base dos Agentes)
-
 class BaseAgent:
     """Abstract Agent."""
 
