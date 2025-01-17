@@ -37,8 +37,8 @@ class SSLExampleEnv(SSLBaseEnv):
         self.rounds = self.max_rounds  ## because of the first round
         self.targets_per_round = 1
 
-        self.my_agents = {0: ExampleAgent(0, False)}
-        self.blue_agents = {i: RandomAgent(i, False) for i in range(1, 11)}
+        self.my_agents = {i: ExampleAgent(i, False) for i in range(0,11)}
+        #self.blue_agents = {i: RandomAgent(i, False) for i in range(1, 11)}
         self.yellow_agents = {i: RandomAgent(i, True) for i in range(0, 11)}
 
         self.gen_target_prob = 0.003
@@ -77,8 +77,9 @@ class SSLExampleEnv(SSLBaseEnv):
             self.rounds = self.max_rounds
             if self.targets_per_round < self.max_targets:
                 self.targets_per_round += 1
-                self.blue_agents.pop(len(self.my_agents))
-                self.my_agents[len(self.my_agents)] = ExampleAgent(len(self.my_agents), False)
+                #self.blue_agents.pop(len(self.my_agents))
+                if len(self.my_agents) < self.n_robots_blue:
+                    self.my_agents[len(self.my_agents)] = ExampleAgent(len(self.my_agents), False)
 
         # Generate new targets
         if len(self.targets) == 0:
@@ -99,12 +100,12 @@ class SSLExampleEnv(SSLBaseEnv):
 
         others_actions = []
         if self.DYNAMIC_OBSTACLES:
-            for i in self.blue_agents.keys():
-                random_target = []
-                if random.uniform(0.0, 1.0) < self.gen_target_prob:
-                    random_target.append(Point(x=self.x(), y=self.y()))
+            #for i in self.blue_agents.keys():
+            #    random_target = []
+            #    if random.uniform(0.0, 1.0) < self.gen_target_prob:
+            #        random_target.append(Point(x=self.x(), y=self.y()))
                     
-                others_actions.append(self.blue_agents[i].step(self.frame.robots_blue[i], obstacles, dict(), random_target, True))
+            #    others_actions.append(self.blue_agents[i].step(self.frame.robots_blue[i], obstacles, dict(), random_target, True))
 
             for i in self.yellow_agents.keys():
                 random_target = []
@@ -116,6 +117,7 @@ class SSLExampleEnv(SSLBaseEnv):
         return myActions + others_actions
 
     def _calculate_reward_and_done(self):
+        # Fazer mais para frente
         return 0, False
     
     def x(self):

@@ -4,6 +4,8 @@ from utils.Point import Point
 from utils.ssl.base_agent import BaseAgent
 import random
 
+# Nao Mexer (Robos Aleatorios)
+
 class RandomAgent(BaseAgent):
     def __init__(self, id=0, yellow=False, vel_mult=0.3):
         super().__init__(id, yellow)

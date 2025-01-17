@@ -5,6 +5,7 @@ from rsoccer_gym.Entities import Robot
 from utils.Point import Point
 from utils.Geometry import Geometry
 
+# Nao Mexer (Base de navegacao do agente)
 
 PROP_VELOCITY_MIN_FACTOR: float = 0.1
 MAX_VELOCITY: float = 1.5

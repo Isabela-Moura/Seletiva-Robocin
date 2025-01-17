@@ -6,3 +6,5 @@ git+https://github.com/goncamateus/rSoccer.git@dev#egg=rsoccer_gym
 pyvirtualdisplay>=3.0
 moviepy >= 1.0.0
 numpy==1.21.2
+
+# Nao Mexer (Setup) 

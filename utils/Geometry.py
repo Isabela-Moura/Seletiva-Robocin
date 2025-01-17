@@ -1,8 +1,10 @@
 import math
 from utils.Point import Point
 
-class Geometry:
+# Nao mexer (Menor distancia e menor angulo entre pontos)
 
+class Geometry:
+  
     @staticmethod
     def modularize(x, mod) -> float:
         """Make a value modular between 0 and mod"""
