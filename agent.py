@@ -6,9 +6,11 @@ from utils.Point import Point
 class ExampleAgent(BaseAgent):
     def __init__(self, id=0, yellow=False):
         super().__init__(id, yellow)
-        self.attraction_constant = 5.0 
-        self.repulsion_constant = 0.30
-        self.repulsion_radius = 0.60
+        self.attraction_constant = 10.0 
+        self.repulsion_constant = 0.5
+        self.repulsion_radius = 0.5
+        self.trapped = 0
+        self.visited_pos = set()
 
     def decision(self):
         if len(self.targets) == 0:
@@ -34,24 +36,32 @@ class ExampleAgent(BaseAgent):
         for target, assigned_id in target_assigments.items():
             if assigned_id == self.id:
                 agent_pos = self.pos
+                if self.trapped == 0:
+                    atraction = self.calculate_attraction(agent_pos, target)
+                    repulsion = self.calculate_repulsion(agent_pos)
 
-                atraction = self.calculate_attraction(agent_pos, target)
-                repulsion = self.calculate_repulsion(agent_pos)
+                    total_force = (
+                        atraction[0] + repulsion[0],
+                        atraction[1] + repulsion[1]
+                    )
 
-                total_force = (
-                    atraction[0] + repulsion[0],
-                    atraction[1] + repulsion[1]
-                )
+                    normalized_force = self.normalize_vector(total_force)
 
-                normalized_force = self.normalize_vector(total_force)
+                    new_pos = Point(
+                        agent_pos.x + normalized_force[0] * 0.45,
+                        agent_pos.y + normalized_force[1] * 0.45
+                    )
+                    if new_pos in self.visited_pos:
+                        self.trapped = 1
+                        continue
+                    self.visited_pos.add(new_pos)
+                    agent_pos = new_pos
+            
+                elif self.trapped == 1:
+                    self.adjust_cell_weights(agent_pos)
+                    self.trapped = 0
 
-                new_pos = Point(
-                    agent_pos.x + normalized_force[0] * 0.75,
-                    agent_pos.y + normalized_force[1] * 0.75
-                )
-
-                
-                target_velocity, target_angle_velocity = Navigation.goToPoint(self.robot, new_pos)
+                target_velocity, target_angle_velocity = Navigation.goToPoint(self.robot, agent_pos)
                 self.set_vel(target_velocity)
                 self.set_angle_vel(target_angle_velocity)
         return
@@ -99,6 +109,10 @@ class ExampleAgent(BaseAgent):
                 total_repulsion_force[1] += self.repulsion_constant
 
         return total_repulsion_force
+
+    # Para evitar a Armadilha de Mínimos Locais
+    def adjust_cell_weights(self, agent_pos):
+        self.obstacles["temp_obstacle"] = agent_pos
 
 
     
